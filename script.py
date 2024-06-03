@@ -1,16 +1,17 @@
 import requests
 
-
+print("\n已修正，可以正常运行！")
 print("\n欢迎关注 Mingyu 的 GitHub 仓库 https://github.com/ymyuuu")
 print("感谢大家支持！\n\n")
 
 
-def list_dns_records(zone_id, api_key):
+def list_dns_records(zone_id, api_key, e_mail):
     endpoint = f"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records"
 
     headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "X-Auth-Key": f"{api_key}",
+        "X-Auth-Email": f"{e_mail}"
     }
 
     try:
@@ -30,17 +31,18 @@ def list_dns_records(zone_id, api_key):
         print(f"发生异常：{e}")
         return []
 
-def delete_dns_record(records, zone_id, api_key):
+def delete_dns_record(records, zone_id, api_key, e_mail):
     while True:
         selected_input = input("请输入需要删除的记录的序号或类型 (多个序号或类型用空格分隔,直接回车则退出程序): ")
 
         if not selected_input.strip():  # 如果输入为空，则退出程序
-		print("已退出,感谢支持")
+            print("已退出,感谢支持")
             break
 
         headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "X-Auth-Key": f"{api_key}",
+            "X-Auth-Email": f"{e_mail}"
         }
 
         selected_ids = selected_input.split()
@@ -62,10 +64,11 @@ def delete_dns_record(records, zone_id, api_key):
 # 用户输入 Zone ID 和 Cloudflare API Key
 zone_id = input("请输入您的 Zone ID: ")
 api_key = input("请输入您的 Cloudflare API Key: ")
+email = input("请输入您的 Cloudflare Email: ")
 
 # 列出 DNS 记录
-records = list_dns_records(zone_id, api_key)
+records = list_dns_records(zone_id, api_key, email)
 
 if records:
     # 删除 DNS 记录
-    delete_dns_record(records, zone_id, api_key)
+    delete_dns_record(records, zone_id, api_key, email)
