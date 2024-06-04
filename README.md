@@ -1,4 +1,6 @@
-# Bulk-deletion-of-Cloudflare-DNS-records
+# 已修复，目前可以成功运行并删除指定DNS记录
+
+由于认证问题在官方的示例代码中在认证中遗漏了 X-Auth-Key 及 X-Auth-Email 这两个选项，导致认证失败，现在已修复。
 
 这个 Python 脚本允许用户列出并批量删除特定 Cloudflare Zone ID 下的 DNS 记录。
 
